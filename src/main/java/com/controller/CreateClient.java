@@ -1,6 +1,5 @@
 package com.controller;
 
-import java.net.MalformedURLException;
 import java.rmi.*;
 import java.util.ArrayList;
 
@@ -35,13 +34,12 @@ public class CreateClient {
     }
 
     private void printHost(){
-        checkHost();
         if(listHost.getChildren()!=null) listHost.getChildren().clear();
 
         for(Host host : hosts){
             try{
                 String[] objetos = Naming.list("rmi://"+host.getHost()+":"+host.getPort()+"/");
-                initHostList(objetos,host);
+                initHostList(objetos);
             }catch (Exception e) {
                 System.err.println("Erro ao listar objetos: " + e.getMessage());
                 e.printStackTrace();
@@ -49,26 +47,7 @@ public class CreateClient {
         }
     }
 
-    private void checkHost(){
-        ArrayList<Host> copy = new ArrayList<>(hosts);
-        for(Host host : hosts){
-            String uri ="rmi://"+host.getHost()+":"+host.getPort()+"/";
-            if(!checkUri(uri)) copy.remove(host);
-        }
-
-        hosts = new ArrayList<>(copy);
-    }
-
-    private boolean checkUri(String uri){
-        try {
-            Naming.list(uri);
-            return true; 
-        } catch ( RemoteException | MalformedURLException e) {
-            return false;
-    }
-    }
-
-    private void initHostList(String[] objetos, Host host){
+    private void initHostList(String[] objetos){
         Label hostName = new Label(String.join("\n",objetos));
         hostName.getStyleClass().add("field-title");
 
