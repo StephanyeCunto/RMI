@@ -1,23 +1,42 @@
 # 🎬 StreamSetup
 
-<div align="center">
+**Configure seu servidor de vídeo de forma descomplicada**
+
+# 📑 Sumário
+
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Características](#-características)
+- [Tecnologias](#-tecnologias)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação)
+- [Como Usar](#-como-usar)
+- [Arquitetura](#-arquitetura)
+- [API RMI](#-api-rmi)
+- [Configuração Avançada](#-configuração-avançada)
+- [Troubleshooting](#️-troubleshooting)
+- [Testes](#-testes)
+- [Segurança](#-segurança)
+- [Performance](#-performance)
+- [Recursos Adicionais](#-recursos-adicionais)
+- [FAQ](#-faq)
+- [Licença](#️-licença)
 
 ![Java](https://img.shields.io/badge/Java-17+-orange?style=for-the-badge&logo=java)
 ![JavaFX](https://img.shields.io/badge/JavaFX-17-blue?style=for-the-badge&logo=java)
 ![RMI](https://img.shields.io/badge/RMI-Java-red?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**Configure seu servidor de vídeo de forma descomplicada**
-
-[Características](#-características) • [Instalação](#-instalação) • [Uso](#-como-usar) • [Arquitetura](#-arquitetura) • [API](#-api-rmi) • [FAQ](#-faq)
-
-</div>
-
 ---
 
 ## 📖 Sobre o Projeto
 
 StreamSetup é uma aplicação distribuída desenvolvida em Java que demonstra o uso de **RMI (Remote Method Invocation)** para controle remoto de reprodução de vídeo. O sistema segue a arquitetura cliente-servidor, onde um servidor hospeda e reproduz o vídeo localmente, enquanto múltiplos clientes podem controlar a reprodução remotamente através de uma interface gráfica moderna construída com JavaFX.
+
+<p align="center">
+  <img src="docs/screenshots/host.png" alt="Tela do Host" width="45%">
+  &nbsp;&nbsp;&nbsp;
+  <img src="docs/screenshots/client.png" alt="Tela do Client" width="45%">
+</p>
 
 ### 🎯 Objetivos
 
@@ -98,8 +117,8 @@ StreamSetup é uma aplicação distribuída desenvolvida em Java que demonstra o
 ### 1️⃣ Clone o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/streamsetup.git
-cd streamsetup
+git clone https://github.com/StephanyeCunto/RMI
+cd RMI
 ```
 
 ### 2️⃣ Configure o POM.xml
@@ -149,9 +168,9 @@ mvn clean install
 
 ### 4️⃣ Adicione seu Vídeo
 
-Coloque um arquivo de vídeo MP4 em:
+Coloque um ou mais arquivo de vídeo MP4 em:
 ```
-src/main/resources/video.mp4
+src/main/resources/
 ```
 
 **Recomendações para o vídeo:**
@@ -173,12 +192,6 @@ src/main/resources/video.mp4
 ```bash
 mvn javafx:run -Djavafx.mainClass=com.CreateHost
 ```
-
-**Via JAR:**
-```bash
-java -jar target/streamsetup-host.jar
-```
-
 **Via IDE:**
 - Execute a classe `com.CreateHost`
 
@@ -197,11 +210,6 @@ java -jar target/streamsetup-host.jar
 3. O vídeo será carregado no player
 4. O servidor RMI ficará aguardando conexões
 
-**Indicadores de Status:**
-- ✅ Verde: Host criado com sucesso
-- ❌ Vermelho: Erro na criação
-- 🔵 Azul: Processando
-
 ---
 
 ### 💻 Modo Cliente
@@ -212,12 +220,6 @@ java -jar target/streamsetup-host.jar
 ```bash
 mvn javafx:run -Djavafx.mainClass=com.CreateClient
 ```
-
-**Via JAR:**
-```bash
-java -jar target/streamsetup-client.jar
-```
-
 **Via IDE:**
 - Execute a classe `com.CreateClient`
 
@@ -450,11 +452,11 @@ public interface VideoServiceInterface extends Remote {
 
 ### Comandos Disponíveis
 
-| Código | Constante Sugerida | Ação | Comportamento |
-|--------|-------------------|------|---------------|
-| `1` | `CMD_PLAY` | ▶️ Play/Resume | Inicia reprodução ou retoma se pausado |
-| `2` | `CMD_STOP` | ⏸️ Pause | Pausa o vídeo no frame atual |
-| `3` | `CMD_RESTART` | 🔄 Restart | Reinicia do início (seek to 0) |
+| Código | Ação | Comportamento |
+|--------|------|---------------|
+| `1` | ▶️ Play/Resume | Inicia reprodução ou retoma se pausado |
+| `2` | ⏸️ Pause | Pausa o vídeo no frame atual |
+| `3` | 🔄 Restart | Reinicia do início (seek to 0) |
 
 ### Exemplo de Uso
 
@@ -491,20 +493,6 @@ try {
 
 ## 🔧 Configuração Avançada
 
-### Configurar Múltiplas Portas
-
-Para executar múltiplos servidores na mesma máquina:
-
-```java
-// Servidor 1
-LocateRegistry.createRegistry(1099);
-Naming.rebind("rmi://localhost:1099/VideoStream1", service1);
-
-// Servidor 2
-LocateRegistry.createRegistry(1100);
-Naming.rebind("rmi://localhost:1100/VideoStream2", service2);
-```
-
 ### Configurar para Rede Externa
 
 1. **No Servidor**, configure o hostname:
@@ -537,68 +525,6 @@ export JAVA_RMI_SERVER_LOGCALLS=true
 
 # Política de segurança (se necessário)
 export JAVA_SECURITY_POLICY=/path/to/policy.txt
-```
-
-### Arquivo de Política de Segurança (Opcional)
-
-Crie `rmi.policy`:
-```
-grant {
-    permission java.net.SocketPermission "*:1024-65535", "connect,accept,resolve";
-    permission java.net.SocketPermission "*:80", "connect";
-};
-```
-
-Execute com:
-```bash
-java -Djava.security.policy=rmi.policy -jar app.jar
-```
-
----
-
-## 🎨 Personalização da Interface
-
-### Modificar Cores
-
-Edite `styleHost.css`:
-
-```css
-/* Cor primária (roxo para azul) */
-.glow-orb-1, .hero-button {
-    -fx-background-color: #3b82f6; /* Azul */
-}
-
-/* Cor de sucesso */
-.status-text.success {
-    -fx-text-fill: #10b981; /* Verde esmeralda */
-}
-
-/* Cor de erro */
-.status-text.error {
-    -fx-text-fill: #ef4444; /* Vermelho */
-}
-```
-
-### Adicionar Novos Controles
-
-No `VideoServiceInterface`, adicione novos métodos:
-
-```java
-public interface VideoServiceInterface extends Remote {
-    void control(int ctrl) throws RemoteException;
-    void setVolume(double volume) throws RemoteException;
-    void seek(Duration time) throws RemoteException;
-    double getCurrentTime() throws RemoteException;
-}
-```
-
-Implemente em `VideoServiceImpl`:
-
-```java
-@Override
-public void setVolume(double volume) throws RemoteException {
-    Platform.runLater(() -> mediaPlayer.setVolume(volume));
-}
 ```
 
 ---
@@ -646,22 +572,6 @@ public void setVolume(double volume) throws RemoteException {
    Test-NetConnection -ComputerName localhost -Port 1099
    ```
 
-### Problema: "ClassNotFoundException" ou "UnmarshalException"
-
-**Causa:** Classes não estão no classpath ou versões diferentes.
-
-**Soluções:**
-1. Certifique-se de que cliente e servidor usam a mesma versão
-2. Verifique o classpath:
-   ```bash
-   java -cp target/classes:target/dependency/* com.CreateHost
-   ```
-3. Use `java.rmi.server.codebase` (não recomendado para produção):
-   ```java
-   System.setProperty("java.rmi.server.codebase", 
-                      "file:///path/to/classes/");
-   ```
-
 ### Problema: Vídeo não carrega ou tela preta
 
 **Causas:**
@@ -671,57 +581,11 @@ public void setVolume(double volume) throws RemoteException {
 
 **Soluções:**
 1. Verifique o caminho do arquivo:
-   ```java
-   File videoFile = new File("src/main/resources/video.mp4");
-   System.out.println("Existe: " + videoFile.exists());
-   System.out.println("Caminho: " + videoFile.getAbsolutePath());
-   ```
 
 2. Converta o vídeo para H.264:
    ```bash
    ffmpeg -i input.mp4 -c:v libx264 -c:a aac output.mp4
    ```
-
-3. Verifique logs do JavaFX Media:
-   ```java
-   mediaPlayer.setOnError(() -> {
-       System.err.println("Media Error: " + mediaPlayer.getError());
-   });
-   ```
-
-### Problema: Interface não responde / Congela
-
-**Causa:** Operações RMI bloqueando a thread UI.
-
-**Solução:** Use operações assíncronas:
-```java
-Task<Void> task = new Task<>() {
-    @Override
-    protected Void call() throws Exception {
-        service.control(1); // Chamada RMI
-        return null;
-    }
-};
-
-task.setOnSucceeded(e -> {
-    // Atualizar UI
-    statusLabel.setText("Vídeo iniciado!");
-});
-
-new Thread(task).start();
-```
-
-### Problema: "java.rmi.StubNotFoundException"
-
-**Causa:** Java não consegue gerar stub dinamicamente (Java 17+).
-
-**Solução:** Garanta que a interface estende `Remote` e todos os métodos lançam `RemoteException`:
-```java
-public interface VideoServiceInterface extends Remote {
-    void control(int ctrl) throws RemoteException;
-}
-```
-
 ---
 
 ## 🧪 Testes
@@ -730,11 +594,6 @@ public interface VideoServiceInterface extends Remote {
 
 1. **Inicie o servidor**
 2. **Verifique o registro RMI**:
-   ```bash
-   rmiregistry 1099 &
-   # Deve mostrar o serviço registrado
-   ```
-
 3. **Conecte com o cliente**
 4. **Execute cada comando** (Start, Stop, Restart)
 5. **Verifique os logs** em ambos os lados
@@ -742,14 +601,6 @@ public interface VideoServiceInterface extends Remote {
 ### Teste de Carga
 
 Conecte múltiplos clientes simultaneamente:
-
-```bash
-# Terminal 1 - Servidor
-java -jar streamsetup-host.jar
-
-# Terminal 2, 3, 4... - Clientes
-java -jar streamsetup-client.jar
-```
 
 ### Teste de Rede
 
@@ -759,7 +610,6 @@ java -jar streamsetup-client.jar
    ```bash
    ping -c 10 192.168.1.10
    ```
-
 ---
 
 ## 🔒 Segurança
@@ -846,32 +696,6 @@ public void control(int ctrl) throws RemoteException {
 1. **Reduzir resolução do vídeo** para 720p se necessário
 2. **Usar codecs eficientes** (H.264, H.265)
 3. **Implementar cache** de conexões RMI
-4. **Pool de threads** para operações assíncronas
-
----
-
-## 🚀 Roadmap
-
-### Versão 2.0 (Planejado)
-
-- [ ] 🎵 Controle de volume
-- [ ] ⏩ Seek/scrubbing na timeline
-- [ ] 📋 Playlist de vídeos
-- [ ] 🎨 Temas customizáveis
-- [ ] 🌐 Interface web complementar
-- [ ] 📱 App mobile (JavaFX Mobile)
-- [ ] 🔐 Sistema de autenticação
-- [ ] 📊 Dashboard de métricas
-- [ ] 🎥 Suporte a streaming real (RTSP/HLS)
-- [ ] 💾 Histórico de reprodução
-
-### Contribuições Bem-vindas
-
-- Correção de bugs
-- Melhorias de UI/UX
-- Documentação
-- Testes unitários
-- Novas funcionalidades
 
 ---
 
@@ -914,4 +738,24 @@ JavaFX Media suporta MP4 (H.264), FLV, e alguns formatos AVI. MP4 com codec H.26
 <details>
 <summary><b>Quantos clientes podem se conectar simultaneamente?</b></summary>
 
-Teoricamente ilimitado, mas depende
+Teoricamente, o número de clientes é **ilimitado**, mas na prática depende de fatores como:  
+
+- **Capacidade do servidor** (CPU, memória, largura de banda)  
+- **Configuração do sistema operacional** (limite de sockets abertos simultaneamente)  
+
+</details>
+<details>
+<summary><b>Como devo organizar os vídeos para múltiplos hosts?</b></summary>
+
+- Cada host deve ter seu próprio diretório de vídeos em `src/main/resources/`.
+- Os arquivos devem ser nomeados de forma única para evitar conflitos.
+- É recomendável manter a mesma estrutura de diretórios entre hosts para facilitar a sincronização.
+</details>
+
+---
+
+## ⚖️ Licença
+
+Este projeto está licenciado sob a **MIT License**.  
+Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
