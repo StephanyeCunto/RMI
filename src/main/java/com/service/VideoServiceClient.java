@@ -11,7 +11,6 @@ public class VideoServiceClient {
         try {
            VideoServiceInterface service = (VideoServiceInterface) Naming.lookup(rmi);
             service.control(ctrl);   
-
         } catch (RemoteException e) {
             System.err.println("ServiceClient RemoteException: " + e.getMessage());
             e.printStackTrace();

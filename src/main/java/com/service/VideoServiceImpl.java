@@ -32,9 +32,11 @@ public class VideoServiceImpl extends UnicastRemoteObject implements VideoServic
 
     @Override 
     public void control(int ctrl) {
-        if(ctrl == 1) playVideo();
-        else if(ctrl == 2) stopVideo();
-        else if(ctrl == 3) restartVideo();
-        else  System.out.println("Comando inválido.");
+        switch (ctrl) {
+            case 1 -> playVideo();
+            case 2 -> stopVideo();
+            case 3 -> restartVideo();
+            default -> System.out.println("Comando inválido.");
+        }
     }
 }

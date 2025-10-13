@@ -25,9 +25,7 @@ public class CreateClient {
 
     private boolean existHost(Host host){
         for(int i = 0; i < hosts.size(); i++){
-            if(hosts.get(i).getHost().equals(host.getHost()) && hosts.get(i).getPort() == host.getPort()){
-                return true;
-            }
+            if(hosts.get(i).getHost().equals(host.getHost()) && hosts.get(i).getPort() == host.getPort()) return true;
         }
 
         return false;
