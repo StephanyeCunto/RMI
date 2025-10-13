@@ -48,6 +48,7 @@
                             <TextField fx:id="serviceField" promptText="ex: VideoStreamRemoto" styleClass="modern-input" />
                             <Label styleClass="field-tip" text="identificador técnico do RMI" />
                         </VBox>
+
                     </HBox>
                     
                     <HBox spacing="24" alignment="CENTER">
@@ -59,6 +60,14 @@
                             </HBox>
                             <TextField fx:id="portField" promptText="1099" styleClass="modern-input" text="1099" />
                             <Label styleClass="field-tip" text="porta padrão é 1099" />
+                        </VBox>
+
+                        <VBox spacing="12" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label styleClass="field-title" text="Vídeo Inicial" />
+                            </HBox>
+                            <ComboBox fx:id="videoComboBox" promptText="Selecione o vídeo" styleClass="modern-combo-box" />
+                            <Label styleClass="field-tip" text="escolha um vídeo para exibir inicialmente" />
                         </VBox>
                     </HBox>
                 </VBox>

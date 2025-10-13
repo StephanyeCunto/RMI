@@ -255,3 +255,38 @@
     -fx-border-radius: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0, 0, 4);
 }
+
+.modern-combo-box {
+    -fx-background-color: #3a3a3f;
+    -fx-border-color: #5a5a5f;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 0 16px 0 16px;
+    -fx-font-size: 15px;
+    -fx-pref-height: 52px;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.15, 0, 2);
+}
+
+.modern-combo-box:focused {
+    -fx-border-color: #8b5cf6;
+    -fx-border-width: 2px;
+    -fx-background-color: #4c3f76;
+    -fx-effect: dropshadow(gaussian, #8b5cf6, 16, 0.4, 0, 0);
+}
+
+.modern-combo-box:hover {
+    -fx-border-color: #6b6b70;
+    -fx-background-color: #444449;
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0.2, 0, 3);
+}
+
+.modern-combo-box .list-cell {
+    -fx-background-color: #3a3a3f;
+    -fx-font-size: 15px;
+    -fx-text-fill: #ffffff;
+}
