@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import com.model.Host;
 import com.service.VideoServiceClient;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.util.Duration;
+
 
 public class CreateClient {
     @FXML private TextField hostField, portField;
@@ -50,19 +55,32 @@ public class CreateClient {
         hostName.getStyleClass().add("field-title");
 
         Button btnStart = new Button("Start");
-        btnStart.setOnAction(e -> initService(1,String.join("\n",objetos))); 
+        btnStart.setOnAction(e -> initService(1,String.join("\n",objetos),0)); 
         btnStart.getStyleClass().add("hero-button");
 
         Button btnStop = new Button("Stop");
-        btnStop.setOnAction(e -> initService(2,String.join("\n",objetos))); 
+        btnStop.setOnAction(e -> initService(2,String.join("\n",objetos),0)); 
         btnStop.getStyleClass().add("hero-button");
 
         Button btnRestart = new Button("Restart");
-        btnRestart.setOnAction(e -> initService(3,String.join("\n",objetos))); 
+        btnRestart.setOnAction(e -> initService(3,String.join("\n",objetos),0)); 
         btnRestart.getStyleClass().add("hero-button");
 
+        Button btnIncreaseVolume = new Button("Increase Volume");
+        btnIncreaseVolume.getStyleClass().add("hero-button");
+        btnIncreaseVolume.setOnAction(e ->{
+            initService(4,String.join("\n",objetos),0.1);
+        });
+
+        Button btnDecreaseVolume = new Button("Decrease Volume");
+        btnDecreaseVolume.getStyleClass().add("hero-button");
+        btnDecreaseVolume.setOnAction(e ->{
+            initService(5,String.join("\n",objetos),0.1);
+        });
+
+
         HBox hboxBtn = new HBox(20);
-        hboxBtn.getChildren().addAll(btnStart, btnStop, btnRestart);
+        hboxBtn.getChildren().addAll(btnStart, btnStop, btnRestart, btnIncreaseVolume, btnDecreaseVolume);
 
         VBox vbox = new VBox(30);
         vbox.getStyleClass().add("modern-card");
@@ -71,8 +89,8 @@ public class CreateClient {
         listHost.getChildren().add(vbox);
     }
 
-    private void initService(int control, String objetos){
+    private void initService(int control, String objetos, double newVolume){
         VideoServiceClient cliente = new VideoServiceClient();
-        cliente.initService(control,objetos);
+        cliente.initService(control,newVolume,objetos);
     }
 }

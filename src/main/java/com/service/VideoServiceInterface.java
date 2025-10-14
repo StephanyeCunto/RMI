@@ -5,5 +5,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface VideoServiceInterface extends Remote {
-    void control(int ctrl) throws RemoteException;
+    void control(int ctrl, double newVolume) throws RemoteException;
 }

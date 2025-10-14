@@ -30,12 +30,32 @@ public class VideoServiceImpl extends UnicastRemoteObject implements VideoServic
         });
     }
 
+    private void increaseVolume(double increaseVolume){
+        Platform.runLater(() -> {
+            double newVolume = Math.min(1.0, mediaPlayer.getVolume() + increaseVolume);
+                        System.out.println("Aumentar volume: "+increaseVolume);
+
+            mediaPlayer.setVolume(newVolume);
+        });
+    }
+
+    private void DecreaseVolume(double decreaseVolume){
+        Platform.runLater(() -> {
+            double newVolume = Math.min(1.0, mediaPlayer.getVolume() - decreaseVolume);
+            System.out.println("Diminuir volume: "+decreaseVolume);
+
+            mediaPlayer.setVolume(newVolume);
+        });
+    }
+
     @Override 
-    public void control(int ctrl) {
+    public void control(int ctrl, double newVolume) {
         switch (ctrl) {
             case 1 -> playVideo();
             case 2 -> stopVideo();
             case 3 -> restartVideo();
+            case 4 -> increaseVolume(newVolume);
+            case 5 -> DecreaseVolume(newVolume);
             default -> System.out.println("Comando inválido.");
         }
     }
