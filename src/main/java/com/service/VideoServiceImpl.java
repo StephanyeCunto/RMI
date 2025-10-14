@@ -33,8 +33,6 @@ public class VideoServiceImpl extends UnicastRemoteObject implements VideoServic
     private void increaseVolume(double increaseVolume){
         Platform.runLater(() -> {
             double newVolume = Math.min(1.0, mediaPlayer.getVolume() + increaseVolume);
-                        System.out.println("Aumentar volume: "+increaseVolume);
-
             mediaPlayer.setVolume(newVolume);
         });
     }
@@ -42,8 +40,6 @@ public class VideoServiceImpl extends UnicastRemoteObject implements VideoServic
     private void DecreaseVolume(double decreaseVolume){
         Platform.runLater(() -> {
             double newVolume = Math.min(1.0, mediaPlayer.getVolume() - decreaseVolume);
-            System.out.println("Diminuir volume: "+decreaseVolume);
-
             mediaPlayer.setVolume(newVolume);
         });
     }
